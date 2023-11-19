@@ -1,17 +1,26 @@
-
 import axios from "axios";
-
 import { useState } from "react";
 import Card from "./Card";
 
 // npm install @fontawesome/fontawesome-free
 const Main=()=>{
     const [search,setSearch]=useState("");
-    const searchBook=(evt)=>{
-        if(evt.key==="Enter"){
-            console.log("hello");
-        }
+    const [bookData,setData]=useState([]);
+    const searchBook=()=>{
+        axios.get('https://www.googleapis.com/books/v1/volumes?q='+search+'&key=AIzaSyCICode3u1ddFVhuscO_RJVVA_Yxx7-ROM'+'&maxResults=40')
+        .then(res=>setData(res.data.items))
+        .catch(err=>console.log(err))
+        
     }
+    const handleSearch = (evt) => {
+        if (evt.key === "Enter") {
+          searchBook();
+        }
+      };
+    
+      const handleButtonClick = () => {
+        searchBook();
+      };
     return(
         <>
         <div className="header">
@@ -24,22 +33,18 @@ const Main=()=>{
                 <div className="search">
                     <input type="text" placeholder="Search Your Book"
                     value={search} onChange={e=>setSearch(e.target.value)}
-                    onKeyUp={searchBook}/>
-                    <button>search</button>
+                    onKeyUp={handleSearch}/>
+                    <button onClick={handleButtonClick}>search</button>
                 </div>
                 <img src="./images/Books8.avif" alt="Books" ></img>
             </div>
         </div>
         <div className="container">
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
+            {
+                <Card book={bookData}/>
+            }
+            
+
         </div>
         </>
     )
