@@ -10,7 +10,7 @@ const Card=({book})=>{
         {
             book.map((item)=>{
                 let thumbnail=item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
-                let amount=item.saleInfo.listPrice && item.saleInfo.listPrice.amount; //no amount found in API
+                // let amount=item.saleInfo.listPrice && item.saleInfo.listPrice.amount; //no amount found in API
                 if(thumbnail!==undefined){
                     return(
                         <>
@@ -18,7 +18,7 @@ const Card=({book})=>{
                         <img src={thumbnail} alt="book"></img>
                         <div className="bottom">
                             <h3 className="title">{item.volumeInfo.title}</h3>
-                            <p className="amount">{amount}$</p>
+                            {/* <p className="amount">{amount}$</p> */}
                         </div>
                     </div>
                     <Model show={show} item={bookItem} onClose={()=>setShow(false)}/>
